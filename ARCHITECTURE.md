@@ -864,7 +864,6 @@ pnpm format           # Prettier 格式化
 | 文档 | 内容 |
 |------|------|
 | [README.md](./README.md) | 项目简介、快速开始、功能列表 |
-| [DESIGN.md](./DESIGN.md) | 产品设计规格：愿景、模块设计、页面设计、彩蛋 |
 | **ARCHITECTURE.md** (本文) | 系统架构、技术实现方案、开发规范 |
-| [DEPLOY.md](./DEPLOY.md) | 部署运维：服务器配置、发布流程、故障排查 |
-| [MEMORY.md](./MEMORY.md) | 开发记忆：阶段进度、决策记录、变更日志 |
+| [CUSTOMIZATION.md](./CUSTOMIZATION.md) | 个性化定制指南：内容替换、主题配置、功能裁剪 |
+| [LICENSE](./LICENSE) | MIT 开源协议 |

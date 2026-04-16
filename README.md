@@ -4,6 +4,8 @@ An open-source, AI-native personal website template with cinematic design, intel
 
 Built with **Next.js 16**, **React 19**, **AI SDK 6**, **WebGPU**, and a custom design system.
 
+**Live Demo → [conorliu.com](https://conorliu.com)**
+
 ---
 
 ## Features

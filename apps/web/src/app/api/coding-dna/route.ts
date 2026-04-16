@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 
-const GITHUB_USERNAME = process.env.GITHUB_USERNAME ?? "your-github-username";
+const GITHUB_USERNAME =
+  process.env.GITHUB_ACCOUNT_USERNAME?.trim() ||
+  process.env.GITHUB_USERNAME?.trim() ||
+  "your-github-username";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 const githubHeaders: Record<string, string> = {
