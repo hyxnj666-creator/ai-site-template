@@ -25,13 +25,15 @@ export function PortalCard({
   ...props
 }: PortalCardProps) {
   return (
-    <a
+    <div
       className={[
         "group relative isolate block overflow-hidden rounded-[32px] border border-white/[0.08] bg-white/[0.03] px-8 py-10 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/[0.14] hover:bg-white/[0.05]",
         className,
       ].join(" ")}
-      {...props}
     >
+      <a className="absolute inset-0 z-0" {...props}>
+        <span className="sr-only">{title}</span>
+      </a>
       <div
         className={[
           "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-linear-to-br",
@@ -42,7 +44,7 @@ export function PortalCard({
       <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-surface-bright/20 blur-3xl" />
       {visual ? <div className="pointer-events-none absolute inset-0">{visual}</div> : null}
 
-      <div className="relative flex min-h-[320px] flex-col justify-between">
+      <div className="pointer-events-none relative z-10 flex min-h-[320px] flex-col justify-between">
         <div>
           <p
             className={[
@@ -70,6 +72,6 @@ export function PortalCard({
           <span aria-hidden="true">→</span>
         </div>
       </div>
-    </a>
+    </div>
   );
 }

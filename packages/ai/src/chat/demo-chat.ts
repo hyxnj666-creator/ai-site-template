@@ -83,10 +83,10 @@ export const chatModelOptions: Array<{
   label: string;
   provider: string;
 }> = [
-  { id: "gpt-5", label: "GPT-5", provider: modelProviderMap["gpt-5"] },
+  { id: "gpt-5", label: "GPT-5.4", provider: modelProviderMap["gpt-5"] },
   {
     id: "gpt-5-mini",
-    label: "GPT-5 mini",
+    label: "GPT-5.4 mini",
     provider: modelProviderMap["gpt-5-mini"],
   },
   {

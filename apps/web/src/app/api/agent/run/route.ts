@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const session = createSession({ locale, surface: "agent", visitorId });
   const run = startRun({
     locale,
-    model: sanitizedData.model ?? "gpt-5",
+    model: sanitizedData.model ?? "gpt-5.4",
     prompt: sanitizedData.prompt,
     sessionId: session.id,
     surface: "agent",

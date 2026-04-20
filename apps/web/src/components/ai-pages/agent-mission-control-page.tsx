@@ -850,7 +850,11 @@ export function AgentMissionControlPage() {
           break;
         }
         case "step_completed": {
-          upsertItem(`step:${event.stepId}`, { kind: "thought", title: event.title, content: event.content || "", status: "done", timestamp: ts, updatedAtMs: ms });
+          const stepContent = event.content || "";
+          upsertItem(`step:${event.stepId}`, { kind: "thought", title: event.title, content: stepContent, status: "done", timestamp: ts, updatedAtMs: ms });
+          if (stepContent.length > 80) {
+            setCollapsedIds((prev) => { const id = `step:${event.stepId}`; return prev.includes(id) ? prev : [...prev, id]; });
+          }
           scrollTimeline();
           await sleep(200);
           break;
@@ -1200,7 +1204,7 @@ export function AgentMissionControlPage() {
                   const accent = kindAccent[item.kind];
                   const isActive = item.status === "running" || item.status === "streaming";
                   const collapsed = collapsedIds.includes(item.id);
-                  const canCollapse = (item.kind === "observation" || item.kind === "artifact") && Boolean(item.content);
+                  const canCollapse = Boolean(item.content) && (item.kind === "observation" || item.kind === "artifact" || (item.kind === "thought" && item.status === "done" && item.content.length > 80));
                   const elapsed = item.startedAtMs && item.updatedAtMs ? item.updatedAtMs - item.startedAtMs : undefined;
                   const observationData = item.kind === "observation" ? parseObservationContent(item.content) : null;
                   const observationToolKey = item.kind === "observation" && item.id.startsWith("observation:") ? item.id.replace("observation:", "") : null;

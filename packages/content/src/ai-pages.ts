@@ -356,7 +356,7 @@ export const aiPageExperiencesByLocale: LocalizedValue<AiPageExperiences> = {
           accent: "primary",
           eyebrow: "Streaming active",
           latency: "12.4s",
-          name: "GPT-5",
+          name: "GPT-5.4",
           paragraphs: [
             "零知识证明允许一方在不暴露原始秘密的前提下，证明自己确实知道这个秘密。对产品工程师来说，它最关键的意义是“验证成立，但明文不出边界”。",
             "如果把传统登录理解成把钥匙交给系统检查，那么 ZKP 更像是在门口做一次不会泄露钥匙形状的验证仪式。它常出现在身份、链上验证和隐私支付这些场景。",
@@ -401,7 +401,7 @@ export const aiPageExperiencesByLocale: LocalizedValue<AiPageExperiences> = {
             challenge: "Design a memory strategy for a long-running coding agent.",
             timestamp: "5h ago",
             voteSplit: "54 / 46",
-            winner: "GPT-5",
+            winner: "GPT-5.4",
             winnerAccent: "primary",
           },
           {
@@ -419,7 +419,7 @@ export const aiPageExperiencesByLocale: LocalizedValue<AiPageExperiences> = {
         ctaLabel: "FIGHT",
         eyebrow: "MODEL ARENA",
         inputPlaceholder: "输入一条挑战题，立即发起 GPT 与 Claude 对决",
-        leftModelLabel: "GPT-5",
+        leftModelLabel: "GPT-5.4",
         readinessLabel: "系统已武装，准备开战。",
         rightModelLabel: "CLAUDE",
       },
@@ -784,7 +784,7 @@ export const aiPageExperiencesByLocale: LocalizedValue<AiPageExperiences> = {
           accent: "primary",
           eyebrow: "Streaming active",
           latency: "12.4s",
-          name: "GPT-5",
+          name: "GPT-5.4",
           paragraphs: [
             "Zero-knowledge proofs let one party prove it knows a secret without revealing the secret itself. For a product engineer, the key idea is that verification succeeds while the underlying private data stays sealed.",
             "If traditional authentication feels like handing over the key for inspection, ZKPs are more like demonstrating that the key fits without exposing its shape. That matters for identity, on-chain verification, and privacy-sensitive payments.",
@@ -830,7 +830,7 @@ export const aiPageExperiencesByLocale: LocalizedValue<AiPageExperiences> = {
             challenge: "Design a memory strategy for a long-running coding agent.",
             timestamp: "5h ago",
             voteSplit: "54 / 46",
-            winner: "GPT-5",
+            winner: "GPT-5.4",
             winnerAccent: "primary",
           },
           {
@@ -848,7 +848,7 @@ export const aiPageExperiencesByLocale: LocalizedValue<AiPageExperiences> = {
         ctaLabel: "FIGHT",
         eyebrow: "MODEL ARENA",
         inputPlaceholder: "Enter a challenge prompt and launch a GPT vs Claude showdown",
-        leftModelLabel: "GPT-5",
+        leftModelLabel: "GPT-5.4",
         readinessLabel: "System armed. Ready for deployment.",
         rightModelLabel: "CLAUDE",
       },

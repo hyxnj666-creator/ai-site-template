@@ -103,14 +103,14 @@ async function executeTool(ctx: ExecContext): Promise<ExecResult> {
 async function executeLLM(ctx: ExecContext): Promise<ExecResult> {
   const start = Date.now();
   const config = ctx.node.config ?? {};
-  const model = String(config.model ?? "gpt-5");
+  const model = String(config.model ?? "gpt-5.4");
   const temperature = Number(config.temperature ?? 0.72);
   const customSystem = String(config.systemPrompt ?? "");
   const customUser = String(config.userPrompt ?? "");
 
   const resolvedModel = model === "gpt-5-mini"
-    ? (process.env.OPENAI_FAST_CHAT_MODEL || "gpt-4o-mini")
-    : (process.env.OPENAI_CHAT_MODEL || "gpt-4o");
+    ? (process.env.OPENAI_FAST_CHAT_MODEL || "gpt-5.4-mini")
+    : (process.env.OPENAI_CHAT_MODEL || "gpt-5.4");
 
   const userPrompt = customUser
     ? resolveVariables(customUser, ctx.allOutputs)

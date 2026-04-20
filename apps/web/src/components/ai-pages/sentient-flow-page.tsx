@@ -774,8 +774,8 @@ export function SentientFlowPage() {
                           value={String(selectedNode.config?.model ?? "gpt-5")}
                           onChange={(e) => updateNodeInGraph(selectedNode.id, { config: { model: e.target.value } })}
                         >
-                          <option value="gpt-5">GPT-5</option>
-                          <option value="gpt-5-mini">GPT-5 Mini</option>
+                          <option value="gpt-5">GPT-5.4</option>
+                          <option value="gpt-5-mini">GPT-5.4 Mini</option>
                         </select>
                       </div>
                     )}

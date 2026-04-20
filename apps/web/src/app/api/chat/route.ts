@@ -21,9 +21,9 @@ import { sanitizeMessageContent, extractTextContent, filterClientMessages } from
 
 function resolveOpenAIModel(model: ChatModelId) {
   if (model === "gpt-5-mini") {
-    return process.env.OPENAI_FAST_CHAT_MODEL || "gpt-5-mini";
+    return process.env.OPENAI_FAST_CHAT_MODEL || "gpt-5.4-mini";
   }
-  return process.env.OPENAI_CHAT_MODEL || "gpt-5";
+  return process.env.OPENAI_CHAT_MODEL || "gpt-5.4";
 }
 
 function buildSystemPrompt(

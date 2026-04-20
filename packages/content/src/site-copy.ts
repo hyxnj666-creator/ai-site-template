@@ -81,7 +81,7 @@ export const siteCopyByLocale: LocalizedValue<SiteCopy> = {
       links: [
         { href: siteLinks.resume, label: "简历" },
         { href: siteLinks.blog, label: "博客" },
-        { href: siteLinks.github, label: "源码" },
+        { href: siteLinks.source, label: "源码" },
       ],
     },
     aiLayout: {
@@ -197,7 +197,7 @@ export const siteCopyByLocale: LocalizedValue<SiteCopy> = {
       links: [
         { href: siteLinks.resume, label: "Resume" },
         { href: siteLinks.blog, label: "Blog" },
-        { href: siteLinks.github, label: "Source" },
+        { href: siteLinks.source, label: "Source" },
       ],
     },
     aiLayout: {

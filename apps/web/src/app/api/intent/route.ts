@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     });
 
     const { text } = await generateText({
-      model: openai(process.env.OPENAI_FAST_CHAT_MODEL ?? "gpt-4o-mini"),
+      model: openai(process.env.OPENAI_FAST_CHAT_MODEL ?? "gpt-5.4-mini"),
       system: SYSTEM_PROMPT + (locale === "en" ? "\nUse English for label and description." : ""),
       prompt: query.trim().slice(0, 200),
       maxOutputTokens: 120,

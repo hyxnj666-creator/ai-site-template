@@ -256,12 +256,12 @@ function templateModelComparison(locale: "zh" | "en"): WorkflowGraph {
     id: "model-comparison",
     name: locale === "zh" ? "多模型对比" : "Model Comparison",
     description: locale === "zh"
-      ? "同一 prompt 并行调用 GPT-5 和 GPT-5 Mini，合并后由第三个 LLM 做对比分析"
-      : "Run GPT-5 and GPT-5 Mini in parallel, merge, then compare",
+      ? "同一 prompt 并行调用 GPT-5.4 和 GPT-5.4 Mini，合并后由第三个 LLM 做对比分析"
+      : "Run GPT-5.4 and GPT-5.4 Mini in parallel, merge, then compare",
     nodes: [
       { id: "trigger-1", type: "trigger", label: locale === "zh" ? "用户输入" : "User Input", position: { x: 80, y: 240 } },
-      { id: "llm-a", type: "llm", label: "GPT-5", config: { model: "gpt-5", temperature: 0.72, systemPrompt: "", userPrompt: "" }, position: { x: 380, y: 100 } },
-      { id: "llm-b", type: "llm", label: "GPT-5 Mini", config: { model: "gpt-5-mini", temperature: 0.72, systemPrompt: "", userPrompt: "" }, position: { x: 380, y: 380 } },
+      { id: "llm-a", type: "llm", label: "GPT-5.4", config: { model: "gpt-5", temperature: 0.72, systemPrompt: "", userPrompt: "" }, position: { x: 380, y: 100 } },
+      { id: "llm-b", type: "llm", label: "GPT-5.4 Mini", config: { model: "gpt-5-mini", temperature: 0.72, systemPrompt: "", userPrompt: "" }, position: { x: 380, y: 380 } },
       { id: "merge-1", type: "merge", label: locale === "zh" ? "合并结果" : "Merge Results", config: { strategy: "concat" }, position: { x: 680, y: 240 } },
       {
         id: "llm-compare", type: "llm",

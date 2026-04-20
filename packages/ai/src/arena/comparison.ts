@@ -5,8 +5,8 @@ export const arenaModelSchema = z.enum(["gpt-5", "gpt-5-mini", "claude-sonnet"])
 export type ArenaModelId = z.infer<typeof arenaModelSchema>;
 
 export const arenaModelLabels: Record<ArenaModelId, string> = {
-  "gpt-5": "GPT-5",
-  "gpt-5-mini": "GPT-5 mini",
+  "gpt-5": "GPT-5.4",
+  "gpt-5-mini": "GPT-5.4 mini",
   "claude-sonnet": "Claude Sonnet",
 };
 

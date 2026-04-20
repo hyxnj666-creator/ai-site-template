@@ -31,7 +31,11 @@ function getOpenAI() {
 }
 
 function getModel() {
-  return process.env.OPENAI_CHAT_MODEL?.trim() || "gpt-5";
+  return process.env.OPENAI_CHAT_MODEL?.trim() || "gpt-5.4";
+}
+
+function getFastModel() {
+  return process.env.OPENAI_FAST_CHAT_MODEL?.trim() || "gpt-5.4-mini";
 }
 
 // ─── Standalone Corpus ───────────────────────────────────────────────────────
@@ -220,7 +224,7 @@ async function planTask(task: string, locale: Locale): Promise<PlannerResult> {
   try {
     const client = getOpenAI();
     const completion = await client.chat.completions.create({
-      model: getModel(),
+      model: getFastModel(),
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: (locale === "zh" ? '你是独立 Step Flow Demo 的任务规划器。请输出 JSON：{"analysis":"...","steps":["..."],"tools":["knowledge_search"|"artifact_strategy"|"implementation_checklist"]}。最多 3 个工具。' : 'You are the planner for a standalone Step Flow demo. Output JSON: {"analysis":"...","steps":["..."],"tools":["knowledge_search"|"artifact_strategy"|"implementation_checklist"]}. Choose up to 3 tools.') + (locale === "zh" ? AGENT_SAFETY_SUFFIX_ZH : AGENT_SAFETY_SUFFIX_EN) },
@@ -437,8 +441,9 @@ ${toolOutputs.map((item) => `[${item.tool}]\n${item.output}`).join("\n\n")}`
           : locale === "zh" ? "你是一个 JSON 结构化内容生成器，输出必须是合法 JSON 对象，不要有任何其他文字。" : "You are a JSON structured content generator. Output a valid JSON object only, no other text.";
 
   const client = getOpenAI();
+  const useFullModel = artifactPlan.kind === "html" || artifactPlan.kind === "python";
   const artifactStream = await client.chat.completions.create({
-    model: getModel(),
+    model: useFullModel ? getModel() : getFastModel(),
     messages: [
       { role: "system", content: systemPrompt + (locale === "zh" ? AGENT_SAFETY_SUFFIX_ZH : AGENT_SAFETY_SUFFIX_EN) },
       { role: "user", content: artifactPrompt },
@@ -517,7 +522,10 @@ export async function runAgentStream(
       send({ type: "step_started", stepId: "artifact", title: locale === "zh" ? "生成产物" : "Generate artifacts" });
       sendThought("artifact", locale === "zh" ? "生成产物" : "Generate artifacts", locale === "zh" ? `即将生成 ${artifactPlans.length} 个产物：${artifactPlans.map((p) => p.title).join("、")}` : `Preparing ${artifactPlans.length} artifacts: ${artifactPlans.map((p) => p.title).join(", ")}`);
 
-      for (const ap of artifactPlans) {
+      const primaryArtifacts = artifactPlans.filter((ap) => ap.kind === "html" || ap.kind === "python");
+      const secondaryArtifacts = artifactPlans.filter((ap) => ap.kind !== "html" && ap.kind !== "python");
+
+      for (const ap of primaryArtifacts) {
         sendThought("artifact", locale === "zh" ? "生成产物" : "Generate artifacts", locale === "zh" ? `开始生成 ${ap.title}，类型为 ${ap.kind.toUpperCase()}` : `Starting ${ap.title} as a ${ap.kind.toUpperCase()} artifact`);
         try {
           await streamArtifact({ send, task, locale, artifactPlan: ap, toolOutputs });
@@ -526,6 +534,19 @@ export async function runAgentStream(
           console.error(`Artifact ${ap.id} error:`, artifactError);
           send({ type: "artifact_completed", artifactId: ap.id, kind: ap.kind, title: ap.title, content: locale === "zh" ? `<!-- 生成失败: ${errMsg} -->` : `<!-- Generation failed: ${errMsg} -->` });
         }
+      }
+
+      if (secondaryArtifacts.length > 0) {
+        sendThought("artifact", locale === "zh" ? "生成产物" : "Generate artifacts", locale === "zh" ? `并行生成 ${secondaryArtifacts.length} 个辅助产物` : `Generating ${secondaryArtifacts.length} secondary artifacts in parallel`);
+        await Promise.all(secondaryArtifacts.map(async (ap) => {
+          try {
+            await streamArtifact({ send, task, locale, artifactPlan: ap, toolOutputs });
+          } catch (artifactError) {
+            const errMsg = artifactError instanceof Error ? artifactError.message : "Artifact generation failed";
+            console.error(`Artifact ${ap.id} error:`, artifactError);
+            send({ type: "artifact_completed", artifactId: ap.id, kind: ap.kind, title: ap.title, content: locale === "zh" ? `<!-- 生成失败: ${errMsg} -->` : `<!-- Generation failed: ${errMsg} -->` });
+          }
+        }));
       }
 
       send({ type: "step_completed", stepId: "artifact", title: locale === "zh" ? "生成产物" : "Generate artifacts", content: locale === "zh" ? `已生成 ${artifactPlans.length} 个产物：${artifactPlans.map((p) => p.title).join("、")}` : `Generated ${artifactPlans.length} artifacts: ${artifactPlans.map((p) => p.title).join(", ")}` });
@@ -541,7 +562,7 @@ export async function runAgentStream(
 
     const client = getOpenAI();
     const finalStream = await client.chat.completions.create({
-      model: getModel(),
+      model: getFastModel(),
       messages: [
         { role: "system", content: (locale === "zh" ? "你是一个独立 Step Flow Demo 的最终回答器。请根据工具结果直接回答，不要暴露链路推理细节，不要编造信息。" : "You are the final answer generator for a standalone Step Flow demo. Answer directly from tool results without exposing chain-of-thought and without inventing facts.") + (locale === "zh" ? AGENT_SAFETY_SUFFIX_ZH : AGENT_SAFETY_SUFFIX_EN) },
         { role: "user", content: finalPrompt },
